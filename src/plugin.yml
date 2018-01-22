@@ -1,0 +1,9 @@
+name: Log
+main: lol.clann.Log
+version: 1.0
+depend: [Clann]
+authors: [Clann]
+depend: [Clann]
+commands:
+   log:
+       description: log
