@@ -459,7 +459,7 @@ public class logItem extends LoggerListener {
             target = null;
         }
         enchantment = enchantment != null && !enchantment.isEmpty() ? enchantment : null;
-        Log.plugin.addQueue(new pack(p.getName(), loc.getWorld().getName(), loc.getBlockX(), loc.getBlockZ(), loc.getBlockZ(), act, count, id, data, target, enchantment));
+        Log.plugin.addQueue(new pack(p.getName(), loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), act, count, id, data, target, enchantment));
     }
 
     @Override
