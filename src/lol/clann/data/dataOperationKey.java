@@ -11,12 +11,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.Logger;
 import lol.clann.api.Operation;
 import lol.clann.api.iPack;
-
-@lol.clann.pluginbase.api.AutoRegister
+import lol.clann.pluginbase.api.AutoRegister;
+@AutoRegister
 public class dataOperationKey extends Logger {
 
     public static dataOperationKey register() throws SQLException {

@@ -7,16 +7,16 @@ package lol.clann.data;
 
 import java.sql.SQLException;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.Logger;
 import lol.clann.api.MaterialApi;
 import lol.clann.api.iPack;
+import lol.clann.pluginbase.api.AutoRegister;
 
 /**
  *
  * @author zyp
  */
-@lol.clann.pluginbase.api.AutoRegister
+@AutoRegister
 public class dataMaterialKey extends Logger {
 
     public static dataMaterialKey register() throws SQLException {
