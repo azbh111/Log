@@ -8,9 +8,10 @@ package lol.clann;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 import lol.clann.api.*;
 import lol.clann.data.*;
+import lol.clann.pluginbase.BasePlugin;
 import lol.clann.utils.*;
 import org.bukkit.plugin.java.*;
 import org.bukkit.scheduler.*;
@@ -19,15 +20,15 @@ import org.bukkit.scheduler.*;
  *
  * @author zyp
  */
-public class Log extends JavaPlugin {
+public class Log extends BasePlugin {
 
-    /* 待处理
-
+    /*
+     * 待处理
+     *
      */
     public static final String plgName = "Log";
     public static final String databaseName = "LogAll";
     public DateFormat dateFormate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    public List<BukkitTask> tasks = new ArrayList<>();
     public static Log plugin;
     public SqlServer sql;
     public File dir = null;
@@ -37,24 +38,35 @@ public class Log extends JavaPlugin {
     public dataWorldKey worldKey = null;
     public static boolean run = true;
 
+    public Log() {
+        plugin = this;
+        dir = new File(Clann.parentServerDir, "LogAll");
+    }
+
+    public String address;
+    public String id;
+    public String password;
+
     @Override
-    public void onDisable() {
-        sql.close();
-        run = false;
+    protected void reloadConfig0() {
+        address = getConfig().getString("address");
+        id = getConfig().getString("id");
+        password = getConfig().getString("password");
     }
 
     @Override
-    public void onEnable() {
-        plugin = this;
-        dir = new File(Clann.parentServerDir, "LogAll");
-        initConfig();
+    public void onDisable0() {
+        run = false;
+        sql.close();
+    }
+
+    @Override
+    public void onEnable0() {
         initSql();
-        registerEvents();
-        registerCommand();
     }
 
     private void initSql() {
-        sql = new SqlServer(this, dir, "LogAll", getConfig().getString("address"), getConfig().getString("id"), getConfig().getString("password"));
+        sql = new SqlServer(this, dir, "LogAll", address, id, password);
         try {
             sql.connection();//连接数据库
             //创建自定义函数
@@ -70,36 +82,8 @@ public class Log extends JavaPlugin {
         }
     }
 
-    /**
-     * 注册监听器
-     */
-    private void registerEvents() {
-        try {
-            /*
-            使用包扫描的方式自动实例化
-             */
-            AutoRegister.register(this, "logger");
-        } catch (Throwable e) {
-            API.shutdown(e, "监听器注册失败");
-        }
-    }
-
-    private void registerCommand() {
-        try {
-            /*
-            使用包扫描的方式自动实例化
-             */
-            AutoRegister.register(this, "command", "log");
-        } catch (Throwable ex) {
-            API.shutdown(ex, "指令加载失败");
-        }
-    }
-
-    private void initConfig() {
-        saveDefaultConfig();
-    }
-
     public void addQueue(iPack p) {
         queue.add(p);
     }
+
 }

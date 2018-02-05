@@ -8,10 +8,10 @@ package lol.clann.logger;
 import java.sql.SQLException;
 import lol.clann.Clann;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.LogPack;
 import lol.clann.api.Logger;
 import lol.clann.manager.ThreadManager;
+import lol.clann.pluginbase.api.AutoRegister;
 import lol.clann.utils.API;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitTask;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@AutoRegister
 public class logSystem extends Logger {
 
     public static logSystem register() throws SQLException {

@@ -7,8 +7,10 @@ package lol.clann.logger;
 
 import java.sql.*;
 import lol.clann.*;
-import lol.clann.api.*;
+import lol.clann.api.LogPlayerPack;
+import lol.clann.api.LoggerListener;
 import lol.clann.data.dataPlayerKey;
+import lol.clann.pluginbase.api.AutoRegister;
 import lol.clann.utils.API;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +21,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@AutoRegister
 public class logCommand extends LoggerListener {
 
     public static logCommand register() throws SQLException {

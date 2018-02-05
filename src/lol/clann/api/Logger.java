@@ -11,6 +11,7 @@ import lol.clann.Log;
 import lol.clann.manager.ThreadManager;
 import lol.clann.utils.API;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
  *
@@ -21,12 +22,9 @@ public abstract class Logger {
     protected PreparedStatement ps;
     protected final String name;
     private static long dely = 1000;    //处理队列间隔时间ms
-
-    static {
-        initLogThread();//启动记录线程
-    }
-
+    
     public Logger() throws SQLException {
+        initLogThread();//启动记录线程
         this.name = this.getClass().getSimpleName();
         initTable();
         initPreparedStatement();
@@ -44,12 +42,12 @@ public abstract class Logger {
     /**
      * 异步写入数据库
      */
-    private static void initLogThread() {
-        ThreadManager.addTask(Log.plugin, Bukkit.getScheduler().runTaskAsynchronously(Log.plugin, new Runnable() {
+    private void initLogThread() {
+        BukkitTask bt =  Bukkit.getScheduler().runTaskAsynchronously(Log.plugin, new Runnable() {
             @Override
             public void run() {
                 iPack p = null;
-                while (Log.run) { //循环
+                while (Log.plugin.run) { //循环
                     if (!Log.plugin.queue.isEmpty()) {
                         try {
                             Log.plugin.sql.startTransaction();  //开始事物
@@ -73,7 +71,8 @@ public abstract class Logger {
                     ThreadManager.sleep(dely);
                 }
             }
-        }));
+        });
+        Log.plugin.add(bt);
     }
 
     private void initTable() throws SQLException {

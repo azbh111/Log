@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.util.*;
 import lol.clann.*;
 import lol.clann.Utils.TimeUtils;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.ItemApi;
 import lol.clann.api.MaterialApi;
 import lol.clann.api.Operation;
@@ -21,6 +20,7 @@ import lol.clann.logger.logBlock;
 import lol.clann.object.command.*;
 import lol.clann.object.nbt.NBTContainerBlock;
 import lol.clann.object.nbt.NBTTagCompound;
+import lol.clann.pluginbase.api.AutoRegister;
 import lol.clann.utils.API;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -34,16 +34,15 @@ import org.bukkit.event.player.*;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "command")
+@AutoRegister
 public class LogCommand extends CustomCommand {
 
     PreparedStatement ps_query;
     PreparedStatement ps_rollback;
     inspect isp = new inspect();
 
-    public LogCommand(String cmd) throws SQLException {
-        super(Log.plugin, cmd);
-
+    public LogCommand() throws SQLException {
+        super(Log.plugin, "log");
         ps_query = Log.plugin.sql.getPreparedStatement(""
                 + "SELECT TOP 20 time,player,action,blockId,blockData FROM " + logBlock.class.getSimpleName() + " "
                 + "where action>" + Operation.getDivision() + " and world=? and X=? and Y=? and Z=? and [rollback]=0 order by time asc");

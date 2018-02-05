@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.LogPlayerPack;
 import lol.clann.api.LoggerListener;
 import lol.clann.api.Operation;
@@ -18,6 +17,7 @@ import lol.clann.data.dataOperationKey;
 import lol.clann.data.dataPlayerKey;
 import lol.clann.data.dataWorldKey;
 import lol.clann.object.ID;
+import lol.clann.pluginbase.api.AutoRegister;
 import lol.clann.utils.API;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@AutoRegister
 public class logItem extends LoggerListener {
 
     public boolean debug = false;

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.Logger;
 import lol.clann.api.iPack;
 
@@ -18,7 +17,7 @@ import lol.clann.api.iPack;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, priority = 1, type = "logger")
+@lol.clann.pluginbase.api.AutoRegister
 public class dataWorldKey extends Logger {
 
     private Map<String, Integer> WorldKey = new LinkedHashMap();

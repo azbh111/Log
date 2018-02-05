@@ -7,7 +7,6 @@ package lol.clann.logger;
 
 import java.sql.SQLException;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.LogPlayerPack;
 import lol.clann.api.LoggerListener;
 import lol.clann.data.dataPlayerKey;
@@ -21,7 +20,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@lol.clann.pluginbase.api.AutoRegister
 public class logPlayerDeath extends LoggerListener {
 
     public static logPlayerDeath register() throws SQLException {

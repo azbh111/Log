@@ -8,13 +8,16 @@ package lol.clann.data;
 import java.sql.*;
 import java.util.*;
 import lol.clann.Log;
-import lol.clann.api.*;
+import lol.clann.api.Logger;
+import lol.clann.api.iPack;
+import lol.clann.pluginbase.api.AutoRegister;
+
 
 /**
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, priority = 1, type = "logger")
+@AutoRegister
 public class dataPlayerKey extends Logger {
 
     private Map<String, Integer> PlayerKey = new LinkedHashMap();

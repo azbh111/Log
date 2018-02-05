@@ -7,11 +7,11 @@ package lol.clann.logger;
 
 import java.sql.SQLException;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.LogPlayerPack;
 import lol.clann.api.LoggerListener;
 import lol.clann.data.dataPlayerKey;
 import lol.clann.data.dataWorldKey;
+import lol.clann.pluginbase.api.AutoRegister;
 import lol.clann.utils.API;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@AutoRegister
 public class logTeleport extends LoggerListener {
 
     public static logTeleport register() throws SQLException {

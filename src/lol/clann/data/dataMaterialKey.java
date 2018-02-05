@@ -16,7 +16,7 @@ import lol.clann.api.iPack;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, priority = Integer.MAX_VALUE, type = "logger")
+@lol.clann.pluginbase.api.AutoRegister
 public class dataMaterialKey extends Logger {
 
     public static dataMaterialKey register() throws SQLException {

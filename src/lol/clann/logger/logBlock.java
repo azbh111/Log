@@ -7,7 +7,6 @@ package lol.clann.logger;
 
 import java.sql.SQLException;
 import lol.clann.Log;
-import lol.clann.api.AutoRegister;
 import lol.clann.api.BlockApi;
 import lol.clann.api.ItemApi;
 import lol.clann.api.LogPlayerPack;
@@ -22,6 +21,7 @@ import lol.clann.data.dataOperationKey;
 import lol.clann.data.dataPlayerKey;
 import lol.clann.data.dataWorldKey;
 import lol.clann.object.nbt.NBTTagCompound;
+import lol.clann.pluginbase.api.AutoRegister;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +36,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author zyp
  */
-@AutoRegister.Register(plugin = Log.plgName, type = "logger")
+@AutoRegister
 public class logBlock extends LoggerListener {
 
     private int 无尽镐;

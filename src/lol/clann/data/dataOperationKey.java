@@ -16,7 +16,7 @@ import lol.clann.api.Logger;
 import lol.clann.api.Operation;
 import lol.clann.api.iPack;
 
-@AutoRegister.Register(plugin = Log.plgName, priority = Integer.MAX_VALUE, type = "logger")
+@lol.clann.pluginbase.api.AutoRegister
 public class dataOperationKey extends Logger {
 
     public static dataOperationKey register() throws SQLException {
