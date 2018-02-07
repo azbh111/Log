@@ -8,10 +8,7 @@ package lol.clann.api;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import lol.clann.Log;
-import lol.clann.manager.ThreadManager;
 import lol.clann.utils.API;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
 /**
  *
@@ -21,10 +18,8 @@ public abstract class Logger {
 
     protected PreparedStatement ps;
     protected final String name;
-    private static long dely = 1000;    //处理队列间隔时间ms
-    
+
     public Logger() throws SQLException {
-        initLogThread();//启动记录线程
         this.name = this.getClass().getSimpleName();
         initTable();
         initPreparedStatement();
@@ -37,42 +32,6 @@ public abstract class Logger {
      */
     protected void initPreparedStatement() throws SQLException {
         ps = Log.plugin.sql.getPreparedStatement(getInsertSql(name, Log.plugin.sql.getColumnCountOfTable(name)));
-    }
-
-    /**
-     * 异步写入数据库
-     */
-    private void initLogThread() {
-        BukkitTask bt =  Bukkit.getScheduler().runTaskAsynchronously(Log.plugin, new Runnable() {
-            @Override
-            public void run() {
-                iPack p = null;
-                while (Log.plugin.run) { //循环
-                    if (!Log.plugin.queue.isEmpty()) {
-                        try {
-                            Log.plugin.sql.startTransaction();  //开始事物
-                        } catch (Throwable ex) {
-                            API.log(ex, "事物启动失败");
-                        }
-                        while (!Log.plugin.queue.isEmpty()) { //事物
-                            try {
-                                p = Log.plugin.queue.take();
-                                p.excute();
-                            } catch (Throwable ex) {
-                                API.log(ex, p.getClass().getName() + "异常:" + p);
-                            }
-                        }
-                        try {
-                            Log.plugin.sql.commitTransaction(); //提交事物
-                        } catch (Throwable ex) {
-                            API.log(ex, "事物启动失败");
-                        }
-                    }
-                    ThreadManager.sleep(dely);
-                }
-            }
-        });
-        Log.plugin.add(bt);
     }
 
     private void initTable() throws SQLException {

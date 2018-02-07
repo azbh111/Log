@@ -12,12 +12,13 @@ import java.util.Map;
 import lol.clann.Log;
 import lol.clann.api.Logger;
 import lol.clann.api.iPack;
+import lol.clann.pluginbase.api.AutoRegister;
 
 /**
  *
  * @author zyp
  */
-@lol.clann.pluginbase.api.AutoRegister
+@AutoRegister(priority = 98)
 public class dataWorldKey extends Logger {
 
     private Map<String, Integer> WorldKey = new LinkedHashMap();

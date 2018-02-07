@@ -16,7 +16,7 @@ import lol.clann.pluginbase.api.AutoRegister;
  *
  * @author zyp
  */
-@AutoRegister
+@AutoRegister(priority = 99)
 public class dataMaterialKey extends Logger {
 
     public static dataMaterialKey register() throws SQLException {

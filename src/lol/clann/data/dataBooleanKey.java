@@ -15,7 +15,7 @@ import lol.clann.pluginbase.api.AutoRegister;
  *
  * @author zyp
  */
-@AutoRegister
+@AutoRegister(priority = 100)
 public class dataBooleanKey extends Logger {
 
     public static dataBooleanKey register() throws SQLException {

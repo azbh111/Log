@@ -7,14 +7,14 @@ package lol.clann;
 
 import java.io.*;
 import java.text.*;
-import java.util.*;
 import java.util.concurrent.*;
 import lol.clann.api.*;
 import lol.clann.data.*;
+import lol.clann.manager.ThreadManager;
 import lol.clann.pluginbase.BasePlugin;
 import lol.clann.utils.*;
-import org.bukkit.plugin.java.*;
-import org.bukkit.scheduler.*;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
  *
@@ -63,12 +63,14 @@ public class Log extends BasePlugin {
     @Override
     public void onEnable0() {
         initSql();
+        initLogThread();//启动记录线程
     }
 
     private void initSql() {
         sql = new SqlServer(this, dir, "LogAll", address, id, password);
         try {
             sql.connection();//连接数据库
+            log("已连接至数据库");
             //创建自定义函数
             if (!sql.hasResult("select * from sysobjects where name = 'dateTrans'")) {
                 sql.getStatement().execute(""
@@ -86,4 +88,46 @@ public class Log extends BasePlugin {
         queue.add(p);
     }
 
+    /**
+     * 异步写入数据库
+     */
+    private void initLogThread() {
+        BukkitTask bt = Bukkit.getScheduler().runTaskAsynchronously(Log.plugin, new Runnable() {
+            @Override
+            public void run() {
+                iPack p = null;
+                while (run) { //循环
+                    if (!Log.plugin.queue.isEmpty()) {
+                        try {
+                            Log.plugin.sql.startTransaction();  //开始事物
+                        } catch (Throwable ex) {
+                            API.log(ex, "开启事务失败");
+                            try {
+                                Thread.sleep(10000);
+                                continue;
+                            } catch (InterruptedException ex1) {
+                                ex1.printStackTrace();
+                            }
+                        }
+                        while (!Log.plugin.queue.isEmpty()) { //事物
+                            try {
+                                p = Log.plugin.queue.take();
+                                p.excute();
+                            } catch (Throwable ex) {
+                                API.log(ex, p.getClass().getName() + "异常:" + p);
+                            }
+                        }
+                        try {
+                            Log.plugin.sql.commitTransaction(); //提交事物
+                        } catch (Throwable ex) {
+                            API.log(ex, "提交食物失败");
+                        }
+                    }
+                    ThreadManager.sleep(dely);
+                }
+            }
+        });
+        add(bt);
+    }
+    private static long dely = 1000;    //处理队列间隔时间ms
 }

@@ -17,7 +17,7 @@ import lol.clann.pluginbase.api.AutoRegister;
  *
  * @author zyp
  */
-@AutoRegister
+@AutoRegister(priority = 98)
 public class dataPlayerKey extends Logger {
 
     private Map<String, Integer> PlayerKey = new LinkedHashMap();
